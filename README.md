@@ -35,7 +35,7 @@ config.py           домен, SEO, соцмережі
 seo.py / slugs.py / og_image.py   SEO-голова, слаги, OG-зображення
 templates/base.html спільний макет (head, мобільне меню, htmx)
 templates/fragment.html  htmx-фрагмент
-assets/media/       public.css, site.css, site.js, зображення, PDF
+assets/media/       site.css, site.js, зображення, PDF
 assets/fonts/       шрифт для OG-зображень
 .github/workflows/  CI: збірка + публікація на Pages
 ```

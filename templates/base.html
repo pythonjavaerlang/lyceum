@@ -2,25 +2,22 @@
 <html lang="uk">
 <head>
     <meta charset="utf-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="google" content="notranslate">
     {{ seo_head(meta) }}
-    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500&display=swap" rel="stylesheet" type="text/css"/>
-    <link href="{{ media_url }}public.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <link href="{{ media_url }}site.css" rel="stylesheet"/>
     <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous" defer></script>
 </head>
 <body>
     {% include "_icons.html" %}
-    <div id="wrapper">
-        <div id="main">
-            <!-- Mobile top bar: hamburger + logo (shown on small screens via CSS). -->
-            <div id="mobile-bar">
-                <a href="/" class="mobile-logo">{{ site_short }}</a>
-                <button id="nav-toggle" aria-label="Меню" aria-expanded="false">&#9776;</button>
-            </div>
+
+    <header class="site-header">
+        <div class="site-header__bar">
+            <a href="/" class="brand">{{ site_short }}</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Меню" aria-expanded="false" aria-controls="site-nav">&#9776;</button>
             <nav id="site-nav" aria-label="Головне меню">
                 <a href="/">Головна</a>
                 <a href="/about/">Про ліцей</a>
@@ -29,13 +26,47 @@
                 <a href="/student-groups/">Учнівські гуртки</a>
                 <a href="/camp/">Табір</a>
                 <a href="/edu-prg/">Освітній проєкт</a>
-                <a href="/#container07">Контакти</a>
             </nav>
+        </div>
+    </header>
+
+    <div id="wrapper">
+        <main id="main">
             <div class="inner" id="content">
                 {% block content %}{{ page_content | safe }}{% endblock %}
             </div>
-        </div>
+        </main>
     </div>
+
+    <footer class="site-footer" id="site-contacts">
+        <div class="site-footer__inner">
+            <div>
+                <h2>Контакти</h2>
+                <p>58004, м. Чернівці (мікрорайон «Роша»),<br>
+                   вул. Краматорська, 1-В, заїзд з вул. Рибінської</p>
+                <p>тел.: (0372) 51-53-64;<br>
+                   +38 050 204-75-30, +38 068 533-53-30</p>
+                <p>Ел. пошта:
+                   <a href="mailto:chernivtsilyceum@gmail.com">chernivtsilyceum@gmail.com</a></p>
+            </div>
+            <div>
+                <h2>Соціальні мережі</h2>
+                <p><a href="https://www.facebook.com/privatelyceum/" rel="noopener">Facebook</a></p>
+                <p><a href="https://www.instagram.com/chernivtsilyceum/" rel="noopener">Instagram</a></p>
+            </div>
+            <div>
+                <h2>Навігація</h2>
+                <p><a href="/about/">Про ліцей</a></p>
+                <p><a href="/enrolling/">Вступ до ліцею</a></p>
+                <p><a href="/transparency/">Інформаційна відкритість</a></p>
+            </div>
+        </div>
+        <div class="site-footer__bottom">
+            © <span id="footer-year">2025</span> {{ site_name }}
+        </div>
+    </footer>
+
+    <script>document.getElementById("footer-year").textContent = new Date().getFullYear();</script>
     <script src="{{ media_url }}site.js" defer></script>
 </body>
 </html>

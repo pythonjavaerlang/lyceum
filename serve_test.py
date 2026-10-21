@@ -13,7 +13,7 @@ paths = [
     "/about/", "/about/fragment.html",
     "/enrolling/", "/transparency/", "/camp/", "/edu-prg/",
     "/student-groups/", "/structure/", "/regulations/",
-    "/media/public.css", "/media/site.css", "/media/site.js",
+    "/media/site.css", "/media/site.js",
     "/media/images/logo.jpg", "/media/images/image01.jpg",
     "/media/statute.pdf", "/og/index.jpg",
 ]

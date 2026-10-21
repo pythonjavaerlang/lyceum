@@ -101,14 +101,22 @@ def canonical(slug: str) -> str:
 _PAGE_LINK = re.compile(r'href="([a-z0-9_\-]+)\.html(#[\w-]+)?"', re.I)
 _ASSET_IMG = re.compile(r'(src|href)="(assets/images/[^"]+)"')
 _LOCAL_ASSET = re.compile(r'(src|href)="([\w\-]+\.(?:png|jpg|jpeg|gif|svg|pdf))"')
-_CSS_LINK = re.compile(r'href="public\.css"')
+_CSS_LINK = re.compile(r'<link[^>]+href="public\.css"[^>]*>', re.I)
+_INLINE_STYLE = re.compile(r'\s+style="[^"]*"', re.I)
+_CONTACTS_BLOCK = re.compile(
+    r'<div id="container07"[^>]*>.*?</div>\s*</div>\s*</div>', re.S)
 _GALLERY_BLOCK = re.compile(
     r'<a href="/gallery/[^"]*">\s*<img[^>]*>\s*</a>', re.S)
 
 
 def rewrite(body: str, gallery_imgs: list[str]) -> str:
-    # 1. public.css -> media
-    body = _CSS_LINK.sub(f'href="{MEDIA_URL}public.css"', body)
+    # 1. Drop any builder stylesheet link + all builder inline style attributes.
+    body = _CSS_LINK.sub("", body)
+    body = _INLINE_STYLE.sub("", body)
+    # 1b. Contacts live in the shared footer now — remove the duplicate block,
+    #     and point any "#container07" buttons at the footer contacts instead.
+    body = _CONTACTS_BLOCK.sub("", body)
+    body = body.replace('href="#container07"', 'href="#site-contacts"')
     # 2. assets/images/x -> /media/images/x
     body = _ASSET_IMG.sub(lambda m: f'{m.group(1)}="{MEDIA_URL}' + m.group(2)[len("assets/"):] + '"', body)
     # 3. bare local asset files (img068.png, statute.pdf, ...) -> /media/x
@@ -215,6 +223,10 @@ def copy_media():
     bundled = ROOT / "assets" / "media"
     if bundled.exists():
         shutil.copytree(bundled, DIST / "media", dirs_exist_ok=True)
+    # The builder stylesheet is fully replaced by site.css — don't ship it.
+    stale = DIST / "media" / "public.css"
+    if stale.exists():
+        stale.unlink()
 
 
 def write_pages_files():
