@@ -1,0 +1,82 @@
+/* Mobile-friendly overrides + top navigation (layered on top of public.css). */
+
+/* Base safety: media never overflow, allow zoom (viewport no longer blocks it). */
+img, svg, video, iframe, table { max-width: 100%; height: auto; }
+#main .inner { box-sizing: border-box; }
+
+/* ── Top navigation ─────────────────────────────────────────────────────────── */
+#site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: .6rem 1rem;
+    background: #1f2d5a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+#site-nav a {
+    color: #fff;
+    text-decoration: none;
+    font: 500 15px/1.2 "Inter", sans-serif;
+    padding: .4rem .2rem;
+    white-space: nowrap;
+}
+#site-nav a:hover,
+#site-nav a[aria-current="page"] { color: #ffd34d; text-decoration: underline; }
+
+#mobile-bar { display: none; }
+
+/* ── Mobile layout ──────────────────────────────────────────────────────────── */
+@media only screen and (max-width: 820px) {
+    #mobile-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #1f2d5a;
+        padding: .6rem 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 1001;
+    }
+    #mobile-bar .mobile-logo {
+        color: #fff; text-decoration: none; font: 600 15px/1.2 "Inter", sans-serif;
+    }
+    #nav-toggle {
+        background: none; border: 0; color: #fff; font-size: 26px; line-height: 1;
+        cursor: pointer; padding: .2rem .4rem;
+    }
+    #site-nav {
+        display: none;
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0;
+    }
+    #site-nav.open { display: flex; }
+    #site-nav a {
+        padding: .9rem 1.2rem;
+        border-top: 1px solid rgba(255,255,255,.12);
+        font-size: 16px;
+        white-space: normal;
+    }
+
+    /* Let the builder's fixed widths reflow on phones. */
+    #wrapper, #main, #main .inner,
+    .container, .container .wrapper, .container .inner,
+    [id^="container"] { width: auto !important; max-width: 100% !important; }
+    .columns, .columns > .wrapper > .inner { display: block !important; }
+    .gallery-link { width: auto !important; }
+    body { -webkit-text-size-adjust: 100%; }
+}
+
+/* ── Gallery grid (static) ──────────────────────────────────────────────────── */
+.gallery-link { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.gallery-link a { display: inline-block; }
+.gallery-link img { display: block; border-radius: 4px; }
+
+/* htmx: subtle fade on content swap. */
+#content.htmx-swapping { opacity: .3; transition: opacity .12s ease-out; }

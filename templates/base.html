@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="google" content="notranslate">
+    {{ seo_head(meta) }}
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500&display=swap" rel="stylesheet" type="text/css"/>
+    <link href="{{ media_url }}public.css" rel="stylesheet"/>
+    <link href="{{ media_url }}site.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous" defer></script>
+</head>
+<body>
+    {% include "_icons.html" %}
+    <div id="wrapper">
+        <div id="main">
+            <!-- Mobile top bar: hamburger + logo (shown on small screens via CSS). -->
+            <div id="mobile-bar">
+                <a href="/" class="mobile-logo">{{ site_short }}</a>
+                <button id="nav-toggle" aria-label="Меню" aria-expanded="false">&#9776;</button>
+            </div>
+            <nav id="site-nav" aria-label="Головне меню">
+                <a href="/">Головна</a>
+                <a href="/about/">Про ліцей</a>
+                <a href="/enrolling/">Вступ</a>
+                <a href="/transparency/">Інформаційна відкритість</a>
+                <a href="/student-groups/">Учнівські гуртки</a>
+                <a href="/camp/">Табір</a>
+                <a href="/edu-prg/">Освітній проєкт</a>
+                <a href="/#container07">Контакти</a>
+            </nav>
+            <div class="inner" id="content">
+                {% block content %}{{ page_content | safe }}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="{{ media_url }}site.js" defer></script>
+</body>
+</html>
